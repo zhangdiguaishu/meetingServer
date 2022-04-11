@@ -1,0 +1,350 @@
+<html lang="en">
+<script>
+    function showFileInput(){
+        $("#fileInput").show();
+    }
+
+    function hideFileInput(){
+        $("#fileInput").hide();
+    }
+
+    function jpt(){
+        window.location.href='recording.html';
+    }
+
+    function showExplaination(){
+        $("#explaination").show();
+    }
+
+    function hideExplaination(){
+        $("#explaination").hide();
+    }
+</script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>泾渭智能会议</title>
+    <!--jQuery and bootstrap-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>"
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
+    <script src="../js/demo/datatables-demo.js"></script>
+
+    <!-- Custom fonts for this template-->
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/demo.css" rel="stylesheet">
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎<br>null</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="showRecordTest.html">
+                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
+                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="搜索会议..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username">null</span>
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                个人信息
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="login.html" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                退出系统
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="col">
+                    <div class="col-lg-7" style="margin-left:300px;">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <p class="h4 text-gray-900 mb-4" style="font-size:1.5em;">新建会议</p>
+                                <a data-toggle="modal" data-target="#gaojipeizhi">
+                                    <label class="btn btn-info">
+                                        录音配置
+                                    </label>
+                                </a>
+                            </div>
+                            <form class="patient" id="newMeetingReg" method="post">
+                                <!--<input name="valid" value="true" type="radio" checked="checked" style="display:none">-->
+                                <div class="form-group">
+                                    <input type="text" name="topic" class="form-control form-control-user" id="realname" placeholder="会议主题" style="font-size:1.25em;">
+                                </div>
+                                <div class="form-group">
+                                    <input type="date" name="date" value="" class="form-control form-control-user" placeholder="日期" style="font-size:1.2em;">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="list" class="form-control form-control-user" id="phone" placeholder="与会人员名单" style="font-size:1.25em;">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="breif" rows="2" cols="40" class="form-control form-control-user" placeholder="会议简介" style="font-size:1.25em;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="remark" rows="5" cols="40" class="form-control form-control-user" placeholder="备注" style="font-size:1.25em;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="新建" class="btn btn-primary btn-user btn-block" id="meeting-reg">
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © Dislab.NJU 2021</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">选择退出以退出当前账号.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="login.html">退出</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--相关配置，有弹窗显示-->
+<div class="modal fade" id="gaojipeizhi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">录音配置</h5>
+                <button class="close" type="button" aria-label="Close" onmousemove="showExplaination()" onmouseout="hideExplaination()">
+                    <a aria-hidden="true">？</a>
+                </button>
+            </div>
+            <div id="explaination" class="modal-body" style="display:none">
+                录制方式：可以在线录制，录制的同时处理音频；也可上传本地同类型设备录制的音频文件进行语音分离
+                <br>
+                采样率：采样率越高，获取的音频更清晰，但是处理时间也越长
+                <br>
+                BF方式：会议室环境建议选择MVDR BF
+                <br>
+                转换源：选择在线翻译服务提供商
+            </div>
+            <form id="recordParas">
+                <div class="modal-body">
+                    <div>
+                        <label class="btn btn-info">
+                            录制方式
+                        </label>
+                        <label class="btn btn-info">
+                            <input name="inputType" value="online" type="radio" onclick="hideFileInput()" checked> 在线录制
+                        </label>
+                        <label class="btn btn-info">
+                            <input name="inputType" value="local" type="radio" onclick="showFileInput()"> 本地上传
+                        </label>
+                        <label class="btn btn-info" id="fileInput" style="width: 100%; display:none">
+                            <input type="file" >
+                        </label>
+                    </div>
+                    <div>
+                        <label class="btn btn-info">
+                            &nbsp;&nbsp;采样率&nbsp;&nbsp;
+                        </label>
+                        <label class="btn btn-info">
+                            <select style="width:120px" checked name="sampleRate"><option value="40k">40k</option><option value="44k">44k</option><option value="48k">48k</option></select>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="btn btn-info">
+                            &nbsp;BF方式&nbsp;
+                        </label>
+                        <label class="btn btn-info">
+                            <select style="width:120px" checked name="BFType"><option value="mvdr">MVDR</option><option value="fixed">fixed</option><option value="winer">winer</option></select>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="btn btn-info">
+                            &nbsp;&nbsp;转换源&nbsp;&nbsp;
+                        </label>
+                        <label class="btn btn-info">
+                            <select style="width:120px" checked name="translateResource"><option value="kexf">科大讯飞</option><option value="txy">腾讯云</option><option value="bdsb">百度识别</option></select>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="submit">完成</button>
+                    <a class="btn btn-secondary" type="button" data-dismiss="modal">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/jquery-getUrlParam.js"></script>
+
+<script>
+    function done(){
+        alert("配置保存成功");
+    }
+</script>
+
+<script>
+    $("#newMeetingReg").on('submit', function(){
+      event.preventDefault();
+
+      let meetingInfo = $("#newMeetingReg").serializeArray();
+      let meetingInfoJson = {};
+      $.each(meetingInfo, function(index, field) {
+          meetingInfoJson[field.name] = field.value;
+      });
+
+      $.ajax({
+          type: "post",
+          url: "http://localhost:8088/newMeeting",
+          contentType: 'application/json',
+          data: JSON.stringify(meetingInfoJson),
+          success: function(res){
+              console.log(res);
+              //返回的信息应当是
+          }
+        });
+    });
+</script>
+
+</body></html>

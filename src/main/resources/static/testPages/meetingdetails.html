@@ -1,0 +1,584 @@
+<!--
+  ~ Copyright (c) 2021. This file is created and edited by Guoqing, all rights are reserved by him.
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<!--<script>
+    function processDone(){
+        alert("处理中，请稍后");
+        setTimeout("showAll()",1500);
+    }
+
+    function showAll(){
+        $("#HIDESHOW").show();
+        $("#resolvedAudio").show();
+        $("#detect").show();
+    }
+
+    function hideAudio(){
+        $("#resolved").hide();
+        $("#HIDESHOW").html('<label class="btn btn-info" onclick="showAudio()" style="margin-left: 35%; margin-top: 4px;">展开</label>');
+    }
+
+    function showAudio(){
+        $("#resolved").show();
+        $("#HIDESHOW").html('<label class="btn btn-info" onclick="hideAudio()" style="margin-left: 35%; margin-top: 4px;">收起</label>');
+    }
+
+    function daochu(){
+        alert("已保存至默认文件夹");
+    }
+
+    function firstTranslate(){
+
+    }
+
+    function secondTranslate(){
+
+    }
+</script>-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>泾渭智能会议</title>
+
+    <!--jquery and bootstrap-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>"
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--i don't know-->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
+    <script src="../js/demo/datatables-demo.js"></script>
+    <script src="../js/jquery-getUrlParam.js"></script>
+    <script src="../vendor/chart.js/Chart.min.js"></script>‘’
+    <script src="../js/mycharts.js"></script>
+    <script src="../js/meetingdetailsHTMLJMP.js"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../css/bowen.css"/>
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link type="text/css" href="../css/select.css" rel="stylesheet">
+
+<!--    <script>
+    function getInfo(){
+        $.get("/info", function(result){
+            var jsonres = JSON.parse(result);
+            console.log(jsonres);
+            if(jsonres.valid == "false") return;
+            document.getElementById("topic").innerHTML = jsonres.topic;
+            document.getElementById("time").innerHTML = jsonres.time;
+            document.getElementById("numberOfPersons").innerHTML = jsonres.numberOfPersons;
+            document.getElementById("sampleRate").innerHTML = jsonres.sampleRate;
+            document.getElementById("translateResource").innerHTML = jsonres.translateResource;
+            document.getElementById("BFType").innerHTML = jsonres.BFType;
+        });
+    }
+</script>-->
+</head>
+<body id="page-top" onload="getInfo()">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="../staticPages/meetingRecords.html">
+                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
+                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content" >
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="搜索会议..."
+                               aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username"></span>
+                            <img class="img-profile rounded-circle"
+                                 src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                个人信息
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../staticPages/userLogin.html" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                退出系统
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!--会议主题介绍-->
+                <div class="mainBlock">
+                    <div>
+                        <div class="audioImage">
+                            <canvas id="myAreaChart1"></canvas>
+                        </div>
+                        <div class="audioPlayer">
+                                <audio src="http://114.212.83.227/wav_org.wav" controls="controls" style="width:100%; height:35px;"></audio>
+                        </div>
+                    </div>
+                    <div class="middleDivide"></div>
+                    <div class="rightBlock">
+                        <ul>
+                            <li>
+                                <span>会议主题：</span>
+                                <p id="topic">xxx小组组会</p>
+                            </li>
+                            <li>
+                                <span>会议日期：</span>
+                                <p id="time">xxxx年xx月xx日</p>
+                            </li>
+                            <li id='detect' style="">
+                                <span>检测出人员数量：</span>
+                                <p id="numberOfPersons">2</p>
+                            </li>
+                        </ul>
+                        <div class="main_button" style="margin-right:10px">
+                            <a data-toggle="modal" data-target="#detailedParas">
+                                <button class="btn btn-primary">录音配置</button>
+                            </a>
+                        </div>
+                        <div class="main_button" style="margin-right:10px; margin-top:3px;">
+                                <button class="btn btn-primary" id="positionToggle" onclick="showPosition()">&nbsp;&nbsp;方位图&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                    <div class="backgroundCanvas" id="backgroundCanvas" style="display:none">
+                    </div>
+                </div>
+                <!--中间空隙-->
+                <div style="height:5px"></div>
+                <div id="HIDESHOW" class="mainBlockDivided" style="">
+                    <label class="btn btn-info" onclick="hideAudio()" style="margin-left: 35%; margin-top:9px;">收起</label>
+                </div>
+
+                <div id="resolved">
+                    <div id="resolvedBrief-1" style="">
+                        <div class="briefrecord">
+                            <div class="d-sm-flex align-items-center justify-content-between">
+                                <h1 class="h3 mb-0 text-gray-800" style="font-size:1.25rem;font-weight:bold;"><table>
+                                    <tr><td><p>声源：</p></td>
+                                        <td><p contenteditable="true">声源1</p></td></tr>
+                                </table></h1>
+                                <a class="btn btn-primary btn-user btn-block"  style="width: auto" onclick="sourceJmp(1)">详情</a>
+                            </div>
+                            <div class="audioPlayer">
+                                <audio src="http://114.212.83.227/wav_1.wav" controls="controls" style="width:750px; height:35px;"></audio>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="resolvedBrief-2">
+                        <div class="briefrecord" style="">
+                            <div class="d-sm-flex align-items-center justify-content-between">
+                                <h1 class="h3 mb-0 text-gray-800" style="font-size:1.25rem;font-weight:bold;"><table>
+                                    <tr><td><p>声源：</p></td>
+                                        <td><p contenteditable="true">声源2</p></td></tr>
+                                </table></h1>
+                                <a class="btn btn-primary btn-user btn-block"  style="width: auto" href="../staticPages/meetingNew.html">详情</a>
+                            </div>
+                            <div class="audioPlayer">
+                                <audio src="http://114.212.83.227/wav_1.wav" controls="controls" style="width:750px; height:35px;"></audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--录音配置-->
+        <div class="modal fade" id="detailedParas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">录音配置</h5>
+                        <button class="close" type="button" aria-label="Close" onmousemove="showExplaination()" onmouseout="hideExplaination()">
+                            <a aria-hidden="true">？</a>
+                        </button>
+                    </div>
+                    <div id="explaination" class="modal-body" style="display:none">
+                        录制方式：可以在线录制，录制的同时处理音频；也可上传本地同类型设备录制的音频文件进行语音分离
+                        <br>
+                        采样率：采样率越高，获取的音频更清晰，但是处理事件也越长
+                        <br>
+                        BF方式：会议室环境建议选择MVDR BF
+                    </div>
+
+                    <form action="/submit" method="post" id="recordParas">
+                        <div class="modal-body">
+                            <div>
+                                <label class="btn btn-info">
+                                    &nbsp;&nbsp;采样率&nbsp;&nbsp;
+                                </label>
+                                <label class="btn btn-info" id="sampleRate">
+                                    40k
+                                </label>
+                            </div>
+                            <div>
+                                <label class="btn btn-info">
+                                    &nbsp;&nbsp;默认翻译源&nbsp;&nbsp;
+                                </label>
+                                <label class="btn btn-info" id="translateResource">
+                                    科大讯飞
+                                </label>
+                            </div>
+                            <div>
+                                <label class="btn btn-info">
+                                    &nbsp;&nbsp;BF方式&nbsp;&nbsp;
+                                </label>
+                                <label class="btn btn-info" id="BFType">
+                                    MVDR
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">完成</button>
+                            <a class="btn btn-secondary" type="button" data-dismiss="modal">取消</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Dislab.NJU 2021</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">选择退出以退出当前账号.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="../staticPages/userLogin.html">退出</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<script>
+function drawArrow(ctx, fromX, fromY, toX, toY, theta, headlen, width, color) {
+    theta = typeof(theta) != 'undefined' ? theta : 30;
+    headlen = typeof(theta) != 'undefined' ? headlen : 10;
+    width = typeof(width) != 'undefined' ? width : 1;
+    color = typeof(color) != 'color' ? color : '#000';
+
+    // 计算各角度和对应的P2,P3坐标
+    var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
+        angle1 = (angle + theta) * Math.PI / 180,
+        angle2 = (angle - theta) * Math.PI / 180,
+        topX = headlen * Math.cos(angle1),
+        topY = headlen * Math.sin(angle1),
+        botX = headlen * Math.cos(angle2),
+        botY = headlen * Math.sin(angle2);
+
+    ctx.beginPath();
+
+    var arrowX = fromX - topX,
+        arrowY = fromY - topY;
+
+    ctx.moveTo(arrowX, arrowY);
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    arrowX = toX + topX;
+    arrowY = toY + topY;
+    ctx.moveTo(arrowX, arrowY);
+    ctx.lineTo(toX, toY);
+    arrowX = toX + botX;
+    arrowY = toY + botY;
+    ctx.lineTo(arrowX, arrowY);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.closePath();
+}
+</script>
+<script>
+    function hidePosition(){
+        $("#backgroundCanvas").hide();
+        var tt = document.getElementById("positionToggle");
+        tt.setAttribute("onclick", "showPosition()");
+    }
+    function showPosition(){
+        $("#backgroundCanvas").show();
+        var t = document.getElementById("backgroundCanvas");
+        t.innerHTML = '<canvas id="position" height="300" width="300">\n' +
+                      '</canvas>';
+        var tt = document.getElementById("positionToggle");
+        tt.setAttribute("onclick", "hidePosition()");
+        drawPosition();
+    }
+    function drawCircle(context, center, radius, color, fill){
+        context.beginPath();
+        if(fill){
+            context.moveTo(center.x, center.y);
+        }else{
+            context.moveTo(center.x + radius, center.y);
+        }
+        context.strokeStyle = color;
+        context.fillStyle = color;
+        context.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
+        context.stroke();
+        if(fill){
+            context.fill();
+        }
+        context.closePath();
+    }
+    function drawBackground(context, center, radius, color){
+        var init = 3;
+
+        drawCircle(context, center, init, color, true);
+        init = init + 19;
+        while(init <= radius){
+            drawCircle(context, center, init, color, false);
+            init = init + 19;
+        }
+
+        context.lineWidth = 0.5;
+        context.beginPath();
+        context.moveTo(center.x, center.y - radius);
+        context.lineTo(center.x, center.y + radius);
+        context.stroke();
+        context.closePath();
+
+        context.beginPath();
+        context.moveTo(center.x - radius, center.y);
+        context.lineTo(center.x + radius, center.y);
+        context.stroke();
+        context.closePath();
+    }
+    function drawHuman(context, center, radius, color){
+        drawCircle(context, center, radius, color, true);
+
+        context.beginPath();
+        context.moveTo(center.x, center.y - radius);
+        context.lineTo(center.x - radius, center.y + 3 * radius);
+        context.lineTo(center.x + radius, center.y + 3 * radius);
+        context.lineTo(center.x, center.y - radius);
+        context.stroke();
+        context.fill();
+
+        context.closePath();
+
+    }
+    function drawPosition(){
+        var canvas = document.getElementById('position');
+        var c = canvas.getContext('2d');
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        drawArrow(c, 50, 60, 50, 20, 30, 10, 4, '#f36');
+
+        c.font = "12px normal 仿宋";
+        c.fillStyle = "#000";
+        c.textAlign = "center";
+        c.textBaseline = "middle";
+        c.fillText("麦克风主方向", 50, 80);
+
+        c.lineWidth = 1;
+        drawBackground(c, {x:200, y:100}, 98, "blue");
+        //drawCircle(c, {x:200, y:100}, 98, "blue", false);
+        c.lineWidth = 2;
+        drawHuman(c, {x:200, y:45}, 3, "red");
+        //drawCircle(c, {x:200, y:45}, 5, "red", true);
+        drawHuman(c, {x:283, y:77}, 3, "green");
+        //drawCircle(c, {x:283, y:77}, 5, "yellow", true);
+    }
+    function AddressPos1(){
+        var canvas = document.getElementById('position');
+        var c = canvas.getContext('2d');
+        c.clearRect(100, 0, 200, 200);
+
+        c.lineWidth = 1;
+        drawBackground(c, {x:200, y:100}, 98, "blue");
+        c.lineWidth = 2;
+
+        c.beginPath();
+        c.moveTo(200, 100);
+        c.lineTo(200, 40);
+        c.strokeStyle = "brown";
+        c.stroke();
+        c.closePath();
+
+        drawCircle(c, {x:200, y:45}, 5, "red", true);
+        drawCircle(c, {x:283, y:77}, 5, "yellow", true);
+    }
+    function AddressPos2(){
+        var canvas = document.getElementById('position');
+        var c = canvas.getContext('2d');
+        c.clearRect(100, 0, 200, 200);
+
+        c.lineWidth = 1;
+        drawBackground(c, {x:200, y:100}, 98, "blue");
+        c.lineWidth = 2;
+
+        c.beginPath();
+        c.moveTo(200, 100);
+        c.lineTo(283, 77);
+        c.strokeStyle = "brown";
+        c.stroke();
+        c.closePath();
+
+        drawCircle(c, {x:200, y:45}, 5, "red", true);
+        drawCircle(c, {x:283, y:77}, 5, "yellow", true);
+    }
+</script>
+<script>
+    $("#resolvedBrief-1").mouseenter(function() {
+        AddressPos1()
+    });
+    $("#resolvedBrief-1").mouseleave(function() {
+        drawPosition();
+    });
+
+  $("#resolvedBrief-2").mouseenter(function() {
+        AddressPos2()
+    });
+  $("#resolvedBrief-2").mouseleave(function() {
+        drawPosition();
+  });
+</script>
+
+&lt;!&ndash;只允许一个audio被播放&ndash;&gt;
+<script>
+    var audios = document.getElementsByTagName("audio");
+    function pauseAll(){
+        var self = this;
+        [].forEach.call(audios, function(i){
+            i !== self && i.pause();
+        })
+    }
+    [].forEach.call(audios,function(i){
+        i.addEventListener("play", pauseAll.bind(i));
+    })
+</script>
+-->
+
+</body>
+</html>

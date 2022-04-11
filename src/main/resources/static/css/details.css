@@ -1,0 +1,115 @@
+.mainblock{
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
+
+  display:flex;
+  flex-direction:row;
+
+  width:95vw;
+  min-width:950px;
+  height:410px;
+}
+
+.bigblock{
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+  width:42vw;
+  min-width:420px;
+  height:400px;
+}
+.bigblocktitle{
+  width:42vw;
+  min-width:420px;
+  height:50px;
+  background-color: #f8f9fc;
+  border-bottom: 2px solid #e3e6f0;
+  font-weight: 900;
+}
+.canvasblock{
+  width:42vw;
+  min-width:420px;
+  height:300px;
+}
+.bigAudio{
+  width:42vw;
+  min-width:420px;
+  height:50px;
+
+}
+
+.positionblock{
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+  height:400px;
+  width:395px;
+}
+.positionblocktitle{
+  width:395px;
+  height:50px;
+  background-color: #f8f9fc;
+    border-bottom: 2px solid #e3e6f0;
+    font-weight: 900;
+}
+.positioncanvas{
+  width:320px;
+  height:320px;
+  margin-top:15px;
+}
+
+
+.briefblock{
+  margin-right: -0.75rem;
+    margin-left: -0.75rem;
+
+    display:flex;
+    flex-direction:column;
+
+    width:95vw;
+    min-width:950px;
+    height:auto;
+}
+
+.bbriefblock{
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+  margin-top: 5px;
+  width:42vw;
+  min-width:420px;
+  height:100px;
+}
+.bbriefblocktitle{
+  height:50px;
+  width:38vw;
+  min-width:380px;
+}
+.floatbutton{
+  height:50px;
+  width:4vw;
+  min-width:40px;
+  background-color: #4e73df;
+  color: #ffffff;
+  float:right;
+  display:inline;
+  text-align:center;
+  line-height:50px;
+}
+.bbriefblockaudio{
+  height:50px;
+  width:42vw;
+  min-width:420px;
+}
+
+.titlename{
+   width:60px;
+   height:40px;
+   margin-top:5px;
+}
+.titlebutton{
+  width:60px;
+  height:40px;
+  margin-top:5px;
+
+  border-color: #4e73df;
+  float: right;
+}
+

@@ -1,0 +1,44 @@
+.configOption{
+}
+
+
+
+
+
+
+
+
+
+.init-note {
+    width: 20vw;
+    height: 20vh;
+    padding: 10px 20px;
+    background: rgba(255, 255, 0, 0.2);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: red;
+}
+
+.hddd {
+width: 2rem;
+height: 2rem;
+}
+
+.anhangpailie  {
+    display: flex;
+    flex-direction: row;
+}
+
+tgt {
+background: rgba(255, 255, 0, 0.2) /*设置背景颜色*/
+/*设置字体*/
+/*设置字体大小*/
+/*设置框框大小*/
+/*设置框框位置*/
+}
+
+.sel{
+    position:relative;
+    width:200px;
+    height:25px;
+}

@@ -1,0 +1,85 @@
+.div-select
+{
+    border: solid 1px #999;
+    height: 40px;
+    line-height: 40px;
+    cursor: default;
+}
+
+.div-select-text
+{
+    float: left;
+    background-color: #fff;
+    height: 100%;
+    word-break: keep-all;
+    overflow: hidden;
+    cursor: default;
+}
+
+    .div-select-text > div
+    {
+        padding: 3px;
+        line-height: 34px;
+    }
+
+.div-select-arrow
+{
+    background-color: #fff;
+    float: right;
+    width: 40px;
+    height: 100%;
+    color: #999;
+    cursor: default;
+}
+
+    .div-select-arrow > div
+    {
+        border: solid 1px #999;
+        margin: 2px;
+        height: 34px;
+        background-color: #f2f2f2;
+        text-align: center;
+        line-height: 34px;
+        font-size: 22px;
+    }
+
+.div-select-list
+{
+    position: absolute;
+    float: left;
+    top: 100px;
+    left: 100px;
+    border: solid 1px #999;
+    max-height: 300px;
+    overflow: auto;
+    background-color: #9f9;
+    display: none;
+    z-index: 9100;
+}
+
+    .div-select-list .div-select-item:nth-child(2n+1)
+    {
+        background-color: #fff;
+    }
+
+.div-select-item
+{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #f2f2f2;
+    word-break: keep-all;
+    overflow: hidden;
+    cursor: default;
+}
+
+.div-select-item-hover
+{
+    background-color: #3399ff!important;
+}
+
+.div-select-selected
+{
+    background-color: #3399ff !important;
+}

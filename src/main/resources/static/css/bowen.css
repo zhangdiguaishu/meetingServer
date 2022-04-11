@@ -1,0 +1,200 @@
+.mainBlock{
+    height: 300px;
+    width: 1250px;
+    display: flex;
+    flex-direction: row;
+}
+
+.audioImage{
+  height:265px;
+  width:750px;
+}
+
+.audioPlayer{
+  height:10vh;
+  width:750px;
+}
+
+.backgroundCanvas{
+  height: 200px;
+  width: 300px;
+}
+
+.middleDivide{
+    height:30vh;
+    width:1vw;
+    margin-right:0;
+}
+
+.rightBlock{
+    height:300px;
+    width:200px;
+    margin-left:0;
+
+    font-size: 16px;
+    font-weight:bold;
+    align-items: center;
+}
+
+.divided{
+  height:2vh;
+  width:20vw;
+}
+
+.mainBlockDivided{
+  margin-top: 5px;
+  height: 55px;
+  width: 750px;
+}
+
+.translatedText{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 1px solid #a0b3d6;
+}
+
+.briefrecord{
+  height: 100px;
+  width: 835px;
+}
+
+.myh3{
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+
+}
+
+
+*{
+	margin: 0;
+	padding: 0;
+}
+ul,li,dl,dd,dt{
+	list-style: none;
+}
+.box{
+	overflow: hidden;
+}
+.box dl{
+	width: 620px;
+}
+.box dl dt{
+	width: 100%;
+	float: left;
+	margin-bottom: 50px;
+	position: relative;
+}
+.box dl dt .boxing{
+	height: 15vh;
+	width: auto;
+	overflow: hidden;
+}
+.box dl dt .boxing img{
+	width: 100%;
+}
+.box dl dt .bottom{
+	width: 100%;
+	margin-top: 10px;
+}
+.box dl dt .bottom ul{
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.box dl dt .bottom ul li{
+	margin-right: 20px;
+}
+.box dl dt .bottom ul li:nth-child(1),
+.box dl dt .bottom ul li:nth-child(2){
+	width: 50px;height: 50px;
+	border-radius: 100%;
+	background: #36b9cc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.box dl dt .bottom ul li img{
+	width: 30px;height: 30px;
+}
+.box dl dt .bottom ul li:nth-child(3){
+	width: 75%;height: 7px;
+	border-radius: 20px;
+	border: 1px solid #ededed;
+	position: relative;
+}
+.box dl dt .bottom ul li:nth-child(3) #an{
+	width: 15px;height: 10px;
+	background: #000;
+	position: absolute;
+	left: 0;top: 50%;
+	transform: translateY(-50%);
+	border-radius: 100%;
+	cursor: pointer;
+}
+.box dl dt .bottom ul li:nth-child(3) #yindao{
+	position: absolute;
+	left: 0;top: 0;
+	width: 100%;height: 100%;
+}
+.box dl dt .bottom .audio{
+	width: 100%;
+	margin-top: 10px;
+	overflow: hidden;
+}
+.box dl dt .bottom .audio audio{
+	width: 100%;
+}
+.box dl dt .main{
+	width: auto;
+	position: absolute;
+	right: -40%;
+	top: 50%;
+	transform: translateY(-50%);
+	/*border: 1px solid #333;*/
+	padding: 20px;
+	font-size: 16px;
+	z-index: 2;
+}
+.box dl dt .main ul{
+	width: 100%;
+}
+.box dl dt .main ul li{
+	display: flex;
+}
+.box dl dt .main .main_button{
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.box dl dt .main .main_button button{
+	height: 35px;
+	padding: 5px 10px;
+}
+.box dl dt:nth-child(2) .main{
+	max-width: 340px;
+	position: absolute;
+	right: calc(-40% - 182px);
+}
+.box dl dt:nth-child(2) .main ul{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.box dl dt:nth-child(2) .main ul li{
+	width: 50%;height: 30px;
+}
+.box dl dt:nth-child(2) .main ul li button{
+	height: 35px;
+	padding: 5px 10px;
+	margin-right: 20px;
+}
+.box dl dt:nth-child(2) .main textarea{
+	margin-top: 20px;
+	width: 100%;
+	max-width: 100%;
+}
