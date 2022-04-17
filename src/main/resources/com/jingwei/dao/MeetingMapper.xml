@@ -5,13 +5,13 @@
 <mapper namespace="com.jingwei.dao.MeetingMapper">
 
     <!--public Meeting queryMeetingRecordByIndex(int index);-->
-    <select id="queryMeetingRecordByIndex" resultType="com.jingwei.pojo.Meeting">
+    <select id="queryMeetingRecordByIndex" resultType="com.jingwei.models.pojo.Meeting">
         select * from meetingrecord where `index` = #{para1}
     </select>
 
     
     <!--public List<Meeting> queryMeetingRecordsByUsername(String username);-->
-<!--    <resultMap id="queryMeetingRecordsByUsernameMap" type="com.jingwei.pojo.Meeting">
+<!--    <resultMap id="queryMeetingRecordsByUsernameMap" type="com.jingwei.models.pojo.Meeting">
         <id column="index" property="index"/>
         <result column="username" property="username"/>
         <result column="topic" property="topic"/>
@@ -21,12 +21,12 @@
         <result column="remark" property="remark"/>
         <result column="location" property="location"/>
     </resultMap>-->
-    <select id="queryMeetingRecordsByUsername" resultType="com.jingwei.pojo.Meeting">
+    <select id="queryMeetingRecordsByUsername" resultType="com.jingwei.models.pojo.Meeting">
         select * from meetingrecord where username = #{username}
     </select>
 
     <!--public int insertNewMeetingRecord(Meeting meeting);-->
-    <insert id="insertNewMeetingRecord" parameterType="com.jingwei.pojo.Meeting" useGeneratedKeys="true" keyProperty="index" keyColumn="index">
+    <insert id="insertNewMeetingRecord" parameterType="com.jingwei.models.pojo.Meeting" useGeneratedKeys="true" keyProperty="index" keyColumn="index">
         insert into meetingrecord
             (`index`, topic, date, peoplelist, brief, remark, username, location)
              value

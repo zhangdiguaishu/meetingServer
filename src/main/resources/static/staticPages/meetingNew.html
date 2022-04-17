@@ -64,23 +64,20 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎<br>null</div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
                 <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+                返回主页
+            </a>
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
@@ -91,11 +88,6 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
                 <!-- Topbar Search -->
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -135,8 +127,8 @@
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username">null</span>
-                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username"></span>
+                            <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -144,7 +136,6 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 个人信息
                             </a>
-
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="userLogin.html" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -162,43 +153,44 @@
             <div class="container-fluid">
                 <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
-                <div class="col">
-                    <div class="col-lg-7" style="margin-left:300px;">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <p class="h4 text-gray-900 mb-4" style="font-size:1.5em;">新建会议</p>
-                                <a data-toggle="modal" data-target="#gaojipeizhi">
-                                    <label class="btn btn-info">
-                                        录音配置
-                                    </label>
-                                </a>
+                    <div class="row" style="justify-content: center;">
+                        <div class="col-lg-7">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <p class="h4 text-gray-900 mb-4" style="font-size:1.5em;">新建会议</p>
+                                    <a data-toggle="modal" data-target="#gaojipeizhi">
+                                        <label class="btn btn-info">
+                                            录音配置
+                                        </label>
+                                    </a>
+                                </div>
+                                <form class="patient" id="newMeetingReg" method="post">
+                                    <!--<input name="valid" value="true" type="radio" checked="checked" style="display:none">-->
+                                    <div class="form-group">
+                                        <input type="text" name="topic" class="form-control form-control-user" id="realname" placeholder="会议主题" style="font-size:1.25em;">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" name="date" value="" class="form-control form-control-user" placeholder="日期" style="font-size:1.2em;">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="list" class="form-control form-control-user" id="phone" placeholder="与会人员名单" style="font-size:1.25em;">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="brief" rows="2" cols="40" class="form-control form-control-user" placeholder="会议简介" style="font-size:1.25em;"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="remark" rows="5" cols="40" class="form-control form-control-user" placeholder="备注" style="font-size:1.25em;"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="新建" class="btn btn-primary btn-user btn-block" id="meeting-reg">
+                                    </div>
+                                </form>
+                                <hr>
                             </div>
-                            <form class="patient" id="newMeetingReg" method="post">
-                                <!--<input name="valid" value="true" type="radio" checked="checked" style="display:none">-->
-                                <div class="form-group">
-                                    <input type="text" name="topic" class="form-control form-control-user" id="realname" placeholder="会议主题" style="font-size:1.25em;">
-                                </div>
-                                <div class="form-group">
-                                    <input type="date" name="date" value="" class="form-control form-control-user" placeholder="日期" style="font-size:1.2em;">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="list" class="form-control form-control-user" id="phone" placeholder="与会人员名单" style="font-size:1.25em;">
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="brief" rows="2" cols="40" class="form-control form-control-user" placeholder="会议简介" style="font-size:1.25em;"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="remark" rows="5" cols="40" class="form-control form-control-user" placeholder="备注" style="font-size:1.25em;"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="新建" class="btn btn-primary btn-user btn-block" id="meeting-reg">
-                                </div>
-                            </form>
-                            <hr>
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
             <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->

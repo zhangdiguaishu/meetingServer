@@ -89,7 +89,7 @@
                 success: function(data){
                     if(data["state"] ===  "succeed"){
                         console.log("succ");
-                        //跳转到目标页面
+                        window.location.href="meetingRecords.html";
                     }  else alert("账号名或者密码错误，请重试");
                 },
                 error: function(){

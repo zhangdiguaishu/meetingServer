@@ -1,6 +1,6 @@
 package com.jingwei.dao;
 
-import com.jingwei.pojo.Meeting;
+import com.jingwei.models.pojo.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

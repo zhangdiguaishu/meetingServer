@@ -1,16 +1,12 @@
-package com.jingwei.utility;
-
-import lombok.Data;
-import org.springframework.stereotype.Component;
+package com.jingwei.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+public class CommandRunner extends Thread{
+    private final String meetingIndex;
 
-public class AudioProcessor extends Thread{
-    private String meetingIndex;
-
-    public AudioProcessor(String idx){
+    public CommandRunner(String idx){
         this.meetingIndex = idx;
     }
 
@@ -29,6 +25,4 @@ public class AudioProcessor extends Thread{
             e.printStackTrace();
         }
     }
-
-
 }

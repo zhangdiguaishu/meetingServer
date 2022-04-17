@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jingwei.dao.MeetingMapper;
-import com.jingwei.pojo.Meeting;
-import com.jingwei.utility.AudioProcessor;
+import com.jingwei.models.pojo.Meeting;
+import com.jingwei.utilities.CommandRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +42,7 @@ public class recordsCtl {
     }
     @GetMapping("startProcess/{meetingIndex}")
     public void startProcess(@PathVariable("meetingIndex") String meetingIndex){
-        AudioProcessor audioProcessor = new AudioProcessor(meetingIndex);
+        CommandRunner audioProcessor = new CommandRunner(meetingIndex);
         audioProcessor.run();
     }
 

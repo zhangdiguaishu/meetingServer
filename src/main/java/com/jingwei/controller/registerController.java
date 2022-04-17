@@ -2,16 +2,20 @@ package com.jingwei.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jingwei.dao.UserMapper;
-import com.jingwei.pojo.User;
+import com.jingwei.models.pojo.User;
+import com.jingwei.service.impl.RegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class registerCtl {
+public class registerController {
+    @Autowired
+    private RegisterServiceImpl registerImpl;
     @Autowired
     private UserMapper userMapper;
+
     @PostMapping("/tryRegister")
     public String doInsert(@RequestBody String regJson){
         JSONObject jsonObject = JSONObject.parseObject(regJson);
@@ -27,8 +31,7 @@ public class registerCtl {
         String userEmailAddress = jsonObject.getString("email");
 
         User user = new User(userName, userPassword, userPhoneNumber, userEmailAddress);
-        if (userMapper.registerNewUser(user) == 1) jsonObject.put("state", "succeed");
-        else jsonObject.put("state", "failed");
+        registerImpl.doRegister(user);
 
         return jsonObject.toJSONString();
     }

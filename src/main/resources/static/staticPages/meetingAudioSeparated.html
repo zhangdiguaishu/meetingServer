@@ -4,56 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<script>
-    function getQueryVariable(variable)
-    {
-       var query = decodeURI(window.location.search.substring(1));
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-    }
 
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var dec = decodeURI(window.location.search.substr(1));
-        console.log(dec);
-        var r = dec.match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
-</script>
-
-<!--传入页面的参数有两个，分别是"indexStr"和"idxStr"，分别对应Json文件和音源索引-->
-<!--在展示页面之中，需要根据这两个部分填入对应的内容-->
-<!--onload注入函数-->
-<script>
-    function pageInitDetails(){
-        <!--从sessionStorage之中读出相关信息并解析成Json文件-->
-        var indexStr = getQueryVariable("index");
-        var idxStr = getQueryVariable("idx");
-
-        var briefStr = sessionStorage.getItem(indexStr);
-        var briefJson = JSON.parse(briefStr);
-        console.log(briefJson);
-
-        document.getElementById("miniTopic").innerHTML = "&nbsp;&nbsp;会议:&nbsp;&nbsp;" + briefJson.topic;
-        document.getElementById("miniTime").innerHTML =  "&nbsp;&nbsp;会议日期:" + briefJson.time;
-
-        if(idxStr == "1"){
-            //卫士
-            document.getElementById("pageTopic").innerHTML = briefJson.p1;
-            document.getElementById("pageAudio").setAttribute("src", briefJson.audio1);
-        }else{
-            document.getElementById("pageTopic").innerHTML = briefJson.p2;
-            document.getElementById("pageAudio").setAttribute("src", briefJson.audio2);
-        }
-        //翻译方面，首先设置四个数组，然后让进行查询
-        //再进行在线翻译
-
-    }
-</script>
 
 <head>
     <meta charset="utf-8">
@@ -94,7 +45,7 @@
     <link type="text/css" href="../css/select.css" rel="stylesheet">
     <link type="text/css" href="../css/details.css" rel="stylesheet">
 </head>
-<body id="page-top" onload="pageInitDetails()">
+<body id="page-top" onload="pageFunctionOnLoad()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -105,7 +56,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
 
         <!-- Divider -->
@@ -113,19 +64,15 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
-                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem"></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
+                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
+                返回主页
+            </a>
         </li>
-
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
     <!-- End of Sidebar -->
 
@@ -137,11 +84,6 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -276,6 +218,49 @@
         </div>
     </div>
 </div>
+
+<script>
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var dec = decodeURI(window.location.search.substr(1));
+        console.log(dec);
+        var r = dec.match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    function pageFunctionOnLoad(){}
+
+</script>
+
+<!--传入页面的参数有两个，分别是"indexStr"和"idxStr"，分别对应Json文件和音源索引-->
+<!--在展示页面之中，需要根据这两个部分填入对应的内容-->
+<!--onload注入函数-->
+<script>
+    function pageInitDetails(){
+        <!--从sessionStorage之中读出相关信息并解析成Json文件-->
+        var indexStr = getQueryVariable("index");
+        var idxStr = getQueryVariable("idx");
+
+        var briefStr = sessionStorage.getItem(indexStr);
+        var briefJson = JSON.parse(briefStr);
+        console.log(briefJson);
+
+        document.getElementById("miniTopic").innerHTML = "&nbsp;&nbsp;会议:&nbsp;&nbsp;" + briefJson.topic;
+        document.getElementById("miniTime").innerHTML =  "&nbsp;&nbsp;会议日期:" + briefJson.time;
+
+        if(idxStr == "1"){
+            //卫士
+            document.getElementById("pageTopic").innerHTML = briefJson.p1;
+            document.getElementById("pageAudio").setAttribute("src", briefJson.audio1);
+        }else{
+            document.getElementById("pageTopic").innerHTML = briefJson.p2;
+            document.getElementById("pageAudio").setAttribute("src", briefJson.audio2);
+        }
+        //翻译方面，首先设置四个数组，然后让进行查询
+        //再进行在线翻译
+
+    }
+</script>
 <!--&lt;!&ndash;睡眠&ndash;&gt;
 <script>
     function sSleep(t){

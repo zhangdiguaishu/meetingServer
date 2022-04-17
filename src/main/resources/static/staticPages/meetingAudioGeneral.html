@@ -52,7 +52,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
 
         <!-- Divider -->
@@ -60,19 +60,16 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
-                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem"></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
+                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
+                返回主页
+            </a>
         </li>
 
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
     <!-- End of Sidebar -->
 
@@ -84,11 +81,6 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -137,7 +129,8 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <div class="mainblock">
+                <div class="mainblock" >
+                    <!--主音频-->
                     <div class="bigblock">
                         <!--绘制图表并添加播放轴-->
                         <div class="bigblocktitle card-header shadow" style="font-size:1.4em">原始音频</div>
@@ -146,14 +139,6 @@
                         </div>
                         <div class="bigAudio">
                             <audio id="mainAudio" style="width:100%;" controls="controls"></audio>
-                        </div>
-                    </div>
-                    <div class="positionblock shadow">
-                        <!--<div class="positionblocktitle card-header">
-                            <p class="m-0 font-weight-bold text-primary" style="font-size:1.4em">方位图</p>
-                        </div>-->
-                        <div class="positioncanvas">
-                            <canvas id="positionMap" height="300" width="300" style="margin-top:10px;"></canvas>
                         </div>
                     </div>
                     <div class="positionblock shadow">
@@ -170,53 +155,30 @@
                                     <li>&nbsp;</li>
                                     <li id="pagePersons">与会人员：</li>
                                     <li>&nbsp;</li>
-                                    <!--<li>录音信息</li>
-                                    <li id="pageInfoL1"></li>
-                                    <li id="pageInfoL2"></li>
-                                    <li id="pageInfoL3"></li>
-                                    <li id="pageInfoL4"></li>-->
                                 </ul>
                             </div>
 
                         </div>
                     </div>
                 </div>
-                <!--插入副音频-->
+                <!--副音频-->
+                <div class="subAudio">
+                    <div class="subAudioAudio">
+                        <div class="subAudioAudioTitle">
+                            <div class="subAudioAudioTitleSrc shadow card-header">
+                                <h6 class="m-0 font-weight-bold text-primary" style="display:inline">声源1</h6>
+                            </div>
+                            <div class="subAudioAudioTitleBtn">
+                                详情
+                            </div>
+                        </div>
+                        <div class="subAudioAudioPlayer">
+                            <audio controls="controls" style="width:100%"></audio>
+                        </div>
+                    </div>
+                    <div class="subAudioPlacehoder">
+                    </div>
 
-                <div id="hideBlock" class="briefblock" style="display:none">
-                    <div class="bbriefblock" style="margin-top:2vh;">
-                        <div style="display:flex; flex-direction:row;">
-                            <div class="bbriefblocktitle shadow card-header">
-                                <h6 id="as1" class="m-0 font-weight-bold text-primary" style="display:inline">声源1</h6>
-                            </div>
-                            <div class="floatbutton" id="button1" onclick='jptdetail("audio1")'>详情</div>
-                        </div>
-                        <div class="bbriefblockaudio">
-                            <audio id="audio1" controls="controls" style="width:100%"></audio>
-                        </div>
-                    </div>
-                    <div class="bbriefblock"style="margin-top:2vh;">
-                        <div style="display:flex; flex-direction:row;">
-                            <div class="bbriefblocktitle shadow card-header">
-                                <h6 id="as2" class="m-0 font-weight-bold text-primary" style="display:inline">声源2</h6>
-                            </div>
-                            <div class="floatbutton" id="button2" onclick='jptdetail("audio2")'>详情</div>
-                        </div>
-                        <div class="bbriefblockaudio">
-                            <audio id="audio2" controls="controls" style="width:100%"></audio>
-                        </div>
-                    </div>
-                    <div id="a3" class="bbriefblock" style="margin-top:2vh; display:none;">
-                        <div style="display:flex; flex-direction:row;">
-                            <div class="bbriefblocktitle shadow card-header">
-                                <h6 id="as3" class="m-0 font-weight-bold text-primary" style="display:inline">声源3</h6>
-                            </div>
-                            <div class="floatbutton" id="button3" onclick='jptdetail("audio3")'>详情</div>
-                        </div>
-                        <div class="bbriefblockaudio">
-                            <audio id="audio3" controls="controls" style="width:100%"></audio>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -476,3 +438,48 @@ drawCircle(c, {x:283, y:77}, 5, "yellow", true);
 
 </body>
 </html>
+
+<!--坟-->
+<!--<div class="positionblock shadow">
+                        &lt;!&ndash;<div class="positionblocktitle card-header">
+                            <p class="m-0 font-weight-bold text-primary" style="font-size:1.4em">方位图</p>
+                        </div>&ndash;&gt;
+                        <div class="positioncanvas">
+                            <canvas id="positionMap" height="300" width="300" style="margin-top:10px;"></canvas>
+                        </div>
+                    </div>-->
+<!--                <div id="hideBlock" class="briefblock" style="">
+                    <div class="bbriefblock" style="margin-top:2vh; ">
+                        <div style="display:flex; flex-direction:row;">
+                            <div class="bbriefblocktitle shadow card-header">
+                                <h6 id="as1" class="m-0 font-weight-bold text-primary" style="display:inline">声源1</h6>
+                            </div>
+                            <div class="floatbutton" id="button1" onclick='jptdetail("audio1")'>详情</div>
+                        </div>
+                        <div class="bbriefblockaudio">
+                            <audio id="audio1" controls="controls" style="width:100%"></audio>
+                        </div>
+                    </div>
+                    <div class="bbriefblock"style="margin-top:2vh;">
+                        <div style="display:flex; flex-direction:row;">
+                            <div class="bbriefblocktitle shadow card-header">
+                                <h6 id="as2" class="m-0 font-weight-bold text-primary" style="display:inline">声源2</h6>
+                            </div>
+                            <div class="floatbutton" id="button2" onclick='jptdetail("audio2")'>详情</div>
+                        </div>
+                        <div class="bbriefblockaudio">
+                            <audio id="audio2" controls="controls" style="width:100%"></audio>
+                        </div>
+                    </div>
+                    <div id="a3" class="bbriefblock" style="margin-top:2vh; display:none;">
+                        <div style="display:flex; flex-direction:row;">
+                            <div class="bbriefblocktitle shadow card-header">
+                                <h6 id="as3" class="m-0 font-weight-bold text-primary" style="display:inline">声源3</h6>
+                            </div>
+                            <div class="floatbutton" id="button3" onclick='jptdetail("audio3")'>详情</div>
+                        </div>
+                        <div class="bbriefblockaudio">
+                            <audio id="audio3" controls="controls" style="width:100%"></audio>
+                        </div>
+                    </div>
+                </div>-->
