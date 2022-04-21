@@ -10,7 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ResponseResult {
-    int State;
+    int Status;
     String Message;
     String Data;
 }

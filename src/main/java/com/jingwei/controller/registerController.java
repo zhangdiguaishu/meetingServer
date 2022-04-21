@@ -1,7 +1,9 @@
 package com.jingwei.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jingwei.dao.UserMapper;
+import com.jingwei.models.ResponseResult;
 import com.jingwei.models.pojo.User;
 import com.jingwei.service.impl.RegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,14 @@ public class registerController {
         JSONObject retJsonObject = new JSONObject();
 
         String userName = jsonObject.getString("username");
-        if(userMapper.queryUserByName(userName) != null){
-            retJsonObject.put("state", "conflicted");
-            return  retJsonObject.toJSONString();
-        }
         String userPassword = jsonObject.getString("password");
         String userPhoneNumber = jsonObject.getString("phonenumber");
         String userEmailAddress = jsonObject.getString("email");
 
         User user = new User(userName, userPassword, userPhoneNumber, userEmailAddress);
-        registerImpl.doRegister(user);
+        ResponseResult responseResult = registerImpl.tryRegister(user);
 
-        return jsonObject.toJSONString();
+        System.out.println(JSON.toJSONString(responseResult));
+        return JSON.toJSONString(responseResult);
     }
 }

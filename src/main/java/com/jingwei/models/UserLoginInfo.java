@@ -1,3 +1,4 @@
+/*
 package com.jingwei.models;
 
 import com.jingwei.models.pojo.User;
@@ -50,3 +51,4 @@ public class UserLoginInfo implements UserDetails {
         return true;
     }
 }
+*/

@@ -19,7 +19,7 @@
     <!--public int registerNewUser(User user);-->
     <!--也就是说，在查询传参时，如果参数是一个类，可以直接使用#{attrName}的方式来访问参数之中的同名变量-->
     <insert id="registerNewUser" parameterType="com.jingwei.models.pojo.User">
-        insert into userinfo (username, userpassword, userphonenumber, useremailaddress) value (#{userName}, #{userPassword}, #{userPhoneNumber}, #{userEmailAddress})
+        insert into userinfo (username, userpassword, userphonenumber, useremailaddress) value (#{name}, #{password}, #{phoneNumber}, #{emailAddress})
     </insert>
 
     <!--public String queryPasswordByName(String userName);-->

@@ -5,7 +5,17 @@
 <mapper namespace="com.jingwei.dao.MeetingMapper">
 
     <!--public Meeting queryMeetingRecordByIndex(int index);-->
-    <select id="queryMeetingRecordByIndex" resultType="com.jingwei.models.pojo.Meeting">
+    <resultMap id="meetingMap" type="com.jingwei.models.pojo.Meeting" autoMapping="false">
+        <id property="index" column="index"/>
+        <result property="topic" column="topic"/>
+        <result property="date" column="date"/>
+        <result property="list" column="peoplelist"/>
+        <result property="brief" column="brief"/>
+        <result property="remark" column="remark"/>
+        <result property="username" column="username"/>
+        <result property="location" column="location"/>
+    </resultMap>
+    <select id="queryMeetingRecordByIndex" resultMap="meetingMap">
         select * from meetingrecord where `index` = #{para1}
     </select>
 

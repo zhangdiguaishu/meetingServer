@@ -308,6 +308,9 @@
         $.each(meetingInfo, function(index, field) {
             meetingInfoJson[field.name] = field.value;
         });
+        console.log(localStorage.getItem("jingweiMeetingUser"));
+        meetingInfoJson["username"] = localStorage.getItem("jingweiMeetingUser");
+        console.log(meetingInfoJson);
 
         $.ajax({
             type: "post",
@@ -315,11 +318,14 @@
             contentType: 'application/json',
             data: JSON.stringify(meetingInfoJson),
             success: function(resJSONString){
-                //返回的信息之中包含新建的会议的ID，ID将交由TCP服务器来进行处理
                 resObj = JSON.parse(resJSONString);
-                console.log(resObj["meetingIndex"]);
-                sessionStorage.setItem("jingweiMeetingIndex", resObj["meetingIndex"]);
-                location.href = "../staticPages/meetingOngoing.html";
+                if(resObj["state"] === "failed"){
+                    alert("网络故障，请重试");
+                }else{
+                    console.log(resObj["meetingIndex"]);
+                    localStorage.setItem("jingweiMeetingIndex", resObj["meetingIndex"]);
+                    location.href = "../staticPages/meetingOngoing.html";
+                }
             },
             error: function (){
                 alert("网络故障，请刷新重试");

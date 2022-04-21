@@ -1,9 +1,6 @@
 # IDEA and MAVEN
 .idea/
 target/
-
-HELP.md
-mvnw*
 # DEBUG dirs
 processedRecords/
 receivedRecords/

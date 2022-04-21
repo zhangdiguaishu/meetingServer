@@ -6,6 +6,11 @@ server:
 netty:
   port: 12345
 
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -19,8 +24,8 @@ spring:
     username: root
     password: 334331096Sql
     type: com.alibaba.druid.pool.DruidDataSource
-  application:
-    name: sunny-cloud-security
+  #application:
+   # name: sunny-cloud-security
 
 mybatis:
   mapper-locations: classpath:com/jignwei/dao/*.xml

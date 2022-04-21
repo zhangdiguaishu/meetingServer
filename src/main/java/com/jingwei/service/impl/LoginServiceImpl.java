@@ -1,3 +1,4 @@
+/*
 package com.jingwei.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
@@ -25,19 +26,21 @@ public class LoginServiceImpl implements LoginServiceInterface {
     public ResponseResult tryLogin(User user) {
         //获取AuthenticationManager进行认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);//这一行会使用UserDetailsServices里面的内容进行校验
 
         ResponseResult responseResult = new ResponseResult();
         if(Objects.isNull(authentication)) {
-            responseResult.setState(100);
+            responseResult.setStatus(100);
             responseResult.setMessage("账号或密码错误");
+            throw new RuntimeException("账号或密码错误");
+            //return responseResult;
         }else{
-            responseResult.setState(200);
+            responseResult.setStatus(200);
             responseResult.setMessage("登录成功");
         }
 
         UserLoginInfo userLoginInfo = (UserLoginInfo) authentication.getPrincipal();
-        String jwt = JWTUtil.createJWT(userLoginInfo.getUser().getName());
+        String jwt = JWTUtil.createJWT(userLoginInfo.getUsername());
 
         JSONObject tokenJsonObject = new JSONObject();
         tokenJsonObject.put("token", jwt);
@@ -46,3 +49,4 @@ public class LoginServiceImpl implements LoginServiceInterface {
         return responseResult;
     }
 }
+*/

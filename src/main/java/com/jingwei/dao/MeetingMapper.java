@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface MeetingMapper {
     //query
-    public Meeting queryMeetingRecordByIndex(int index);
+    public Meeting queryMeetingRecordByIndex(int meetingIndex);
     public List<Meeting> queryMeetingRecordsByUsername(String username);
 
     //insert

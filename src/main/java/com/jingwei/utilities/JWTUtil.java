@@ -79,8 +79,9 @@ public class JWTUtil {
     }
 
     public static void main(String[] args) throws Exception {
-//        String jwt = createJWT("2123");
-        Claims claims = parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOTY2ZGE3NGYyZGM0ZDAxOGU1OWYwNjBkYmZkMjZhMSIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTYzOTk2MjU1MCwiZXhwIjoxNjM5OTY2MTUwfQ.NluqZnyJ0gHz-2wBIari2r3XpPp06UMn4JS2sWHILs0");
+        //String jwt = createJWT("2123");
+        //System.out.println(jwt);
+        Claims claims = parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjZDY2NWY1YWQzMmY0ZTc0YjkxMzMwZjI5OTBjZmJmZSIsInN1YiI6IjIxMjMiLCJpc3MiOiJzZyIsImlhdCI6MTY1MDIxMTU3OCwiZXhwIjoxNjUwMjE1MTc4fQ.li-8404pmPpRzhtWqCZCWc7iiWkh0J4wbvaAmuxq5Uo");
         String subject = claims.getSubject();
         System.out.println(subject);
 //        System.out.println(claims);

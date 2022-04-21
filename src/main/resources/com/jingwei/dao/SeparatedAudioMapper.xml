@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingwei.dao.SeparatedAudioMapper">
+    <!--public int intializeNewMeeting(int meetingIndex);-->
+    <insert id="intializeNewMeeting">
+        INSERT INTO separatedaudioinfo(meetingindex, audioindex, audioname)
+        VALUES (#{para1}, 1, "声源1"),
+               (#{para1}, 2, "声源2")
+    </insert>
+    <!--public List<String> queryAudioNameByMeetingIndex();-->
+    <select id="queryAudioNameByMeetingIndex" resultType="java.lang.String">
+        SELECT audioname
+        FROM separatedaudioinfo
+        where meetingindex = #{meetingIndex}
+    </select>
+</mapper>

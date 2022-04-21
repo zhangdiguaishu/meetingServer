@@ -96,12 +96,10 @@
             event.preventDefault();
             alert("xxx");
             let regInfo = $("#formReg").serializeArray();
-            console.log(regInfo);
             let regInfoJson = {};
             $.each(regInfo, function(index, field){
                 regInfoJson[field.name] = field.value;
             });
-            console.log(regInfoJson);
             $.ajax({
                 type: "post",
                 url: "http://localhost:8088/tryRegister",
@@ -109,9 +107,13 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function(resJson) {
-                    if(resJson["state"] === "succeed"){
+                    console.log("***");
+                    console.log(resJson);
+                    console.log("***");
+                    console.log(resJson["status"]);
+                    if(resJson["status"] === 200){
                         alert("注册成功，请返回登录");
-                        //跳转回登陆页面
+                        window.location.href="userLogin.html";
                     }else{
                         alert("用户名冲突，请重新设置用户名");
                     }

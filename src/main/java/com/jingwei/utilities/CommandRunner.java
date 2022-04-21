@@ -4,24 +4,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CommandRunner extends Thread{
-    private final String meetingIndex;
+    private final String cmd;
 
-    public CommandRunner(String idx){
-        this.meetingIndex = idx;
+    public CommandRunner(String cmd){
+        this.cmd = cmd;
     }
 
     @Override
     public void run() {
-        String cmd = "D:\\_environment\\PYTHON\\python.exe D:\\_code\\project_java_meetingServer\\ideaProj\\utility_beamforming\\process_test.py " + meetingIndex;
-        System.out.println(cmd);
         Runtime run = Runtime.getRuntime();
         try {
+            System.out.println("Run cmd:" + cmd);
             Process process = run.exec(cmd);
-            InputStream inputStream = process.getInputStream();
-            while(inputStream.available() > 0){
-                System.out.print(inputStream.read());
-            }
+            process.waitFor();
+            System.out.println("******************done******************");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

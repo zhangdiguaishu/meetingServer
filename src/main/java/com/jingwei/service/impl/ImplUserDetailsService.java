@@ -1,3 +1,4 @@
+/*
 package com.jingwei.service.impl;
 
 import com.jingwei.dao.UserMapper;
@@ -20,7 +21,7 @@ public class ImplUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //查询用户讯息
         User user = userMapper.queryUserByName(username);
-        if(Objects.isNull(username)){
+        if(Objects.isNull(user)){
             throw new RuntimeException("user doesn't exist or password is wrong!");
         }
 
@@ -28,3 +29,4 @@ public class ImplUserDetailsService implements UserDetailsService {
         return new UserLoginInfo(user);
     }
 }
+*/

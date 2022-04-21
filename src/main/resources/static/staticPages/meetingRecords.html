@@ -42,7 +42,7 @@
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
-<body id="page-top" onload="fillRecords()">
+<body id="page-top" onload="pageOnloadFunction()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -225,6 +225,19 @@
 <!--onload函数，从json文件之中读取会议信息并展示-->
 <script>
     'use strict'
+
+    function pageOnloadFunction(){
+        checkLogin();
+        fillRecords();
+    }
+
+    function checkLogin(){
+        if(!localStorage.getItem("jingweiMeetingUser")){
+            alert("请返回登录");
+            window.location.href = "userLogin.html";
+        }
+    }
+
     function fillRecords(){
         let recordArray = getRecords();
         console.log(recordArray);
@@ -235,7 +248,7 @@
         let getRes;
         $.ajax({
             type: "get",
-            url: "http://localhost:8088/getRecordsByName/root",
+            url: "http://localhost:8088/getRecordsByName/" + localStorage.getItem("jingweiMeetingUser"),
             dataType: "JSON",
             async: false,
             success: function(res){
@@ -247,6 +260,7 @@
         });
         return getRes;
     }
+
     function insertRecords(recordJsonArray){
         $.each(recordJsonArray, function(index, data){
 
@@ -254,15 +268,12 @@
                 '<td><a href="meetingBrief.html?meetingIndex=' + data["index"] +'">' + data["topic"] + '</a></td>' +
                 '<td>' + data["date"] + '</td>' +
                 '<td><a href="meetingAudioGeneral.html?meetingIndex=' + data["index"] + '">' +
-                '详情</a></td>' +
+                '详情</a></td>'
                 '</tr>';
             $("#recordsTableBody").append(recordHtml);
         });
     }
 </script>
-
-
-
 </body>
 
 </html>
