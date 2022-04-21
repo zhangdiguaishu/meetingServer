@@ -4,56 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<script>
-    function getQueryVariable(variable)
-    {
-       var query = decodeURI(window.location.search.substring(1));
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-    }
 
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var dec = decodeURI(window.location.search.substr(1));
-        console.log(dec);
-        var r = dec.match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
-</script>
-
-<!--传入页面的参数有两个，分别是"indexStr"和"idxStr"，分别对应Json文件和音源索引-->
-<!--在展示页面之中，需要根据这两个部分填入对应的内容-->
-<!--onload注入函数-->
-<script>
-    function pageInitDetails(){
-        <!--从sessionStorage之中读出相关信息并解析成Json文件-->
-        var indexStr = getQueryVariable("index");
-        var idxStr = getQueryVariable("idx");
-
-        var briefStr = sessionStorage.getItem(indexStr);
-        var briefJson = JSON.parse(briefStr);
-        console.log(briefJson);
-
-        document.getElementById("miniTopic").innerHTML = "&nbsp;&nbsp;会议:&nbsp;&nbsp;" + briefJson.topic;
-        document.getElementById("miniTime").innerHTML =  "&nbsp;&nbsp;会议日期:" + briefJson.time;
-
-        if(idxStr == "1"){
-            //卫士
-            document.getElementById("pageTopic").innerHTML = briefJson.p1;
-            document.getElementById("pageAudio").setAttribute("src", briefJson.audio1);
-        }else{
-            document.getElementById("pageTopic").innerHTML = briefJson.p2;
-            document.getElementById("pageAudio").setAttribute("src", briefJson.audio2);
-        }
-        //翻译方面，首先设置四个数组，然后让进行查询
-        //再进行在线翻译
-
-    }
-</script>
 
 <head>
     <meta charset="utf-8">
@@ -65,7 +16,7 @@
     <title>泾渭智能会议</title>
 
     <!--jQuery and bootstrap-->
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>"
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -94,7 +45,7 @@
     <link type="text/css" href="../css/select.css" rel="stylesheet">
     <link type="text/css" href="../css/details.css" rel="stylesheet">
 </head>
-<body id="page-top" onload="pageInitDetails()">
+<body id="page-top" onload="pageOnloadFunction()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -105,7 +56,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
 
         <!-- Divider -->
@@ -113,19 +64,15 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
-                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem"></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
+                <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
+                返回主页
+            </a>
         </li>
-
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
     <!-- End of Sidebar -->
 
@@ -137,11 +84,6 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -184,16 +126,14 @@
                         </div>
                     </li>
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
-
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <div class="mainblock">
                     <div class="bigblock">
                         <!--绘制图表并添加播放轴-->
-                        <div id="pageTopic" class="bigblocktitle card-header shadow">声源</div>
+                        <div id="audioName" class="bigblocktitle card-header shadow">声源</div>
                         <div class="canvasblock shadow">
                             <canvas id="myAreaChart1"></canvas>
                         </div>
@@ -205,29 +145,36 @@
                         <div class="positionblocktitle card-header">
                             <h6 class="m-0 font-weight-bold text-primary">音频信息</h6>
                         </div>
-                        <div class="positioncanvas">
-                            <div style="height:180px;">
-                                <ul class="m-0 font-weight-bold text-primary card-header">
-                                    <li id="miniTopic">&nbsp;&nbsp;会议:&nbsp;&nbsp;xxx</li>
-                                    <li id="miniTime">&nbsp;&nbsp;会议日期:&nbsp;&nbsp;xxx</li>
+                        <div class="positioncanvas" >
+                            <div class="m-0 font-weight-bold text-primary card-header"
+                                 style="height:75px;">
+                                <ul>
+                                    <li id="meetingTopic">&nbsp;&nbsp;会议:&nbsp;&nbsp;xxx</li>
+                                    <li id="meetingDate">&nbsp;&nbsp;会议日期:&nbsp;&nbsp;xxx</li>
                                 </ul>
-                                <li class="m-0 font-weight-bold text-primary card-header">
-                                    <p style="display:inline";>&nbsp;&nbsp;转换&nbsp;</p>
-                                    <div style="display:inline">
-                                        <input id="stime" type="text" style="width:50px; height:22px;" placeholder="00:00">
-                                        ~
-                                        <input id="etime" type="text" style="width:50px; height:22px;" placeholder="00:00">
-                                    </div>
-                                    <select id="nametype" name="language" style="font-size:14px">
-                                        <option value="cn">汉语</option>
-                                        <option value="en">英语</option>
-                                    </select>
-                                    <button onclick="myt()" type="button" style="display:inline; width:50px; font-size:14px;">转文字</button>
-                                </li>
                             </div>
-
-                            <div>
-                                <textarea id="textDisplay" style="width:350px; height:140px;"></textarea>
+                            <div style="display: flex; flex-direction: row;">
+                                <div class="m-0 font-weight-bold text-primary card-header"
+                                     style="display: flex; flex-direction: column; height:260px; width: 30%;">
+                                    <div style="height:20px;">转换</div>
+                                    <br>
+                                    <div style="height:40px; display: flex; flex-direction: row" >
+                                        <input type="text" name="bTime" value="00:00" style="width:60px; height:30px;"/>
+                                        ~
+                                        <input type="text" name="eTime" value="00:00" style="width:60px; height:30px;"/>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <select name="language" style="width: 100px;">
+                                        <option value="cn" selected>中文</option>
+                                        <option value="en">英文</option>
+                                    </select>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" style="width:50px; font-size:14px;">转换</button>
+                                </div>
+                                <div class="m-0 font-weight-bold text-primary card-header"
+                                     style="display: flex; flex-direction: column; height:260px; width: 70%;">
+                                    <textarea style="height: 100%"></textarea>
+                                </div>
                             </div>
 
                         </div>
@@ -276,161 +223,56 @@
         </div>
     </div>
 </div>
-<!--&lt;!&ndash;睡眠&ndash;&gt;
+
 <script>
-    function sSleep(t){
-        for(var d = Date.now(); Date.now() - d <= t; );
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var dec = decodeURI(window.location.search.substr(1));
+        console.log(dec);
+        var r = dec.match(reg);
+        if (r != null) return unescape(r[2]); return null;
     }
-</script>
-&lt;!&ndash;判断起止时间是否合理&ndash;&gt;
-<script>
-    function isValidBETime(sTime, eTime, duration){
-        if(sTime > eTime || eTime > duration){
-            return false;
-        }else{
-            return true;
-        }
-    }
-</script>
-&lt;!&ndash;发送请求&ndash;&gt;
-<script>
-    function myt(){
-        var sTime;
-        var eTime;
-        var duration = document.getElementById("pageAudio").duration
 
-        sTime = $("#stime").val();
-        eTime = $("#etime").val();
-        console.log(sTime);
-        console.log(eTime);
-        if(sTime == "" && eTime == ""){
-            //翻译全文
-            doTranslate(null, null);
-            return;
-        }else if(sTime == "" || eTime == ""){
-            alert("格式错误！");
-            return;
-        }
+    function loadAudio(){
+        let meetingIndex = getQueryString("meetingIndex");
+        let audioIndex = getQueryString("audioType");
 
-        var bIdx = sTime.indexOf(":");
-        var eIdx = eTime.indexOf(":");
-        var bMin = parseInt(sTime.slice(0, bIdx));
-        console.log("bMin:" + bMin);
-        var bSec = parseInt(sTime.slice(bIdx + 1));
-        console.log("bSec:" + bSec);
-        var eMin = parseInt(eTime.slice(0, eIdx));
-        console.log("eMin:" + eMin);
-        var eSec = parseInt(eTime.slice(eIdx + 1));
-        console.log("eSec:" + eSec);
-        var bT = bMin * 60 + bSec;
-        var eT = eMin * 60 + eSec;
-
-        //判断时段部分是否满足
-        if(! isValidBETime(bT, eT, duration)){
-            alert("时段错误")
-            return;
-        }
-        doTranslate(bT, eT);
-    }
-</script>
-<script>
-    function doTranslate(bTime, eTime){
-        if(bTime == null){
-            bTime = 0;
-        }
-        var idxStr = getQueryVariable("idx");
-        var indexStr = getQueryVariable("index");
-
-        var briefStr = sessionStorage.getItem(indexStr);
-        var briefJson = JSON.parse(briefStr);
-        var ret = "";
-        if(idxStr == "1"){
-            //声源1，判断是哪一个样本
-            if(indexStr == "everydayTalk"){
-                if($("#nametype").val() == "en")
-                    var t = [" ", "Asteroid", " to", " change", "direction."]
-                if(eTime == null){
-                    eTime = t.length - 1;
-                }else if(eTime > (t.length-1)){
-                    eTime = (t.length - 1);
-                }
-                for(var i = bTime; i <= eTime; i = i + 1){
-                    ret = ret + t[i];
-                }
-                sSleep(100 * (eTime - bTime));
-                if(ret == ""){
-                    ret = "未检测出文字信息";
-                }
-                document.getElementById("textDisplay").innerHTML = ret;
-            }else{
-                //Chinese
-                var t = ["", "新财经", "在电商平", "台上搜索红包", "封面平台，立马", "弹出一大批协助", "办理认证业", "务的商家，他", "们提供假", "信息帮助", "买家通过", "微信严格"];
-                console.log(t.length);
-                if(eTime == null){
-                    eTime = t.length - 1;
-                }else if(eTime > (t.length-1)){
-                    eTime = (t.length - 1);
-                }
-                for(var i = bTime; i != eTime; ++ i){
-                    ret += t[i];
-                }
-                sSleep(100 * (eTime - bTime));
-                if(ret == ""){
-                    ret = "未检测出文字信息";
-                }
-                document.getElementById("textDisplay").innerHTML = ret;
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8088/meeting/separatedaudionamelist/" + localStorage.getItem("jingweiMeetingIndex"),
+            dataType: "JSON",
+            async: false,
+            success: function(res){
+                document.getElementById("audioName").innerHTML = res[audioIndex];
+            },
+            error: function(){
+                alert("网络故障，请刷新重试")
             }
-        }else if(idxStr == "2"){
-            //声源2，判断是哪一个样本
-            if(indexStr == "everydayTalk"){
-                var t = [" ", "Natural", " environment,", " a process", " called", " ecological."];
-                if(eTime == null){
-                    eTime = t.length - 1;
-                }else if(eTime > (t.length-1)){
-                    eTime = (t.length - 1);
-                }
-                for(var i = bTime; i <= eTime; ++ i){
-                    ret += t[i];
-                }
-                sSleep(100 * (eTime - bTime));
-                if(ret == ""){
-                    ret = "未检测出文字信息";
-                }
-                document.getElementById("textDisplay").innerHTML = ret;
-            }else{
-                var t = ["", "已经变得", "简历意见", "继续学习", "智库ob", "i斥资400", "多万美元", "设计并训练", "了深度学习", "语言系统g。p。p", "三尽管", "研究人员在。"];
-                if(eTime == null){
-                    eTime = t.length - 1;
-                }else if(eTime > (t.length-1)){
-                    eTime = (t.length - 1);
-                }
-                for(var i = bTime; i <= eTime; ++ i){
-                    ret += t[i];
-                }
-                sSleep(100 * (eTime - bTime));
-                if(ret == ""){
-                    ret = "未检测出文字信息";
-                }
-                document.getElementById("textDisplay").innerHTML = ret;
-            }
-        }else{
-            var t = [" ", "Greatest threat", " in the US,", " if you", " are attempted", " to eliminate."];
-                if(eTime == null){
-                    eTime = t.length - 1;
-                }else if(eTime > (t.length-1)){
-                    eTime = (t.length - 1);
-                }
-                for(var i = bTime; i <= eTime; ++ i){
-                    ret += t[i];
-                }
-                sSleep(100 * (eTime - bTime));
-                if(ret == ""){
-                    ret = "未检测出文字信息";
-                }
-                document.getElementById("textDisplay").innerHTML = ret;
-        }
+        });
+        document.getElementById("pageAudio").setAttribute("src", "http://localhost:8088/audios?meetingIndex=" + meetingIndex + "&audioType=" +audioIndex);
     }
-</script>-->
 
+    function loadInfo(){
+        let meetingIndex = getQueryString("meetingIndex");
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8088/getRecordByIndex/" + meetingIndex,
+            dataType: "JSON",
+            async: false,
+            success: function(res){
+                document.getElementById("meetingTopic").innerHTML = "&nbsp;&nbsp;会议:&nbsp;&nbsp;" + res["topic"];
+                document.getElementById("meetingDate").innerHTML = "&nbsp;&nbsp;日期:&nbsp;&nbsp;" + res["date"];
+            },
+            error: function(){
+                alert("网络故障，请刷新重试");
+            }
+        });
+    }
+
+    function pageOnloadFunction(){
+        loadAudio();
+        loadInfo();
+    }
+</script>
 </body>
 </html>

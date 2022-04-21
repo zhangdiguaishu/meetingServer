@@ -1,58 +1,61 @@
-# 对每一个wav进行互相关，然后波束成形，得到的增强后的结果保存成一个wav文件
 import argparse
+import os.path
+
 import numpy as np
 import math
-import os
+from collections import Counter
 import soundfile as sf
 from corr.xcorr import bf_corr
 import beamforming.beamformer as bf
 
-def process_data(data, rate, file_index):
-    wav1 = data[0]      # 1 和 5做互相关，现在是12个mic
-    wav2 = data[4]
-    corr_result = bf_corr(wav1, wav2)  # 调用互相关模块
-    print("general_corr_result:", corr_result)
+import time
+processedAudioDir = ""
 
-    # 调用BF模块
-    degs = corr_result[1]
-    ratios = corr_result[2]
-    new_ratio = []
-    new_deg = []                       # 非nan角度
-    for i, deg in enumerate(degs):
-        if not math.isnan(deg):
-            new_deg.append(deg)
-            new_ratio.append(ratios[i])
+def corr_data(all_data):
+    corr_results = []
+    for wav in all_data:
+        wav1 = wav.T[0]  # 1 和 5做互相关，现在是12个mic
+        wav2 = wav.T[4]
+        corr_result = bf_corr(wav1, wav2)
+        corr_results.append(corr_result[1])
+    # 投票
+    corr_results = [n for a in corr_results for n in a]
+    new_corr_results = [d for d in corr_results if not math.isnan(d)]  # 非nan角度
+    corr_count = Counter(new_corr_results).most_common(2)  # 返回出现频率最高的两个数认为是声源
+    corr_final = [item[0] for item in corr_count]
+    return corr_final
 
-    look_deg = []                       # 找出峰值最大的两个峰对应的角度(已知声源数为2)
-    index = []
-    Inf = -1
-    for i in range(2):
-        index.append(new_ratio.index(max(new_ratio)))
-        new_ratio[new_ratio.index(max(new_ratio))] = Inf
-    index.sort()
-    # print("index-sort:", index)
-    for i in index:
-        look_deg.append(new_deg[i])
-    # print("期望角度：", look_deg)
 
-    bf_results = []                         # 维度：有效角度数x2
+# 对1s的数据进行处理，得到包含两个角度的bf结果
+def bf_data(data, look_deg):
+    bf_results = []  # 维度：有效角度数x2
     for i, deg in enumerate(look_deg):
-        bf_results.append([])
-
         multi_data = data[0: 4].T
         bf_result = bf.get_enhanced_speech(deg, multi_data)
-        bf_results[i].append(bf_result)
+        bf_result = bf_result.tolist()
+        bf_results.append(bf_result)
 
-        sf.write(processedAudioDir + "/bf_result_" + str(file_index) + str(i) + ".wav",
-                 bf_result / np.max(np.abs(bf_result)) * 0.65,
-                 rate)
-    print("bf计算完成")
+    return bf_results
 
-processedAudioDir = ""
+
+def process_data(all_data, deg, cnt, processedAudioDir):
+    merge_bf_results = []
+    for wav in all_data:
+        bf_results = bf_data(wav.T, deg)
+        merge_bf_results.append(bf_results)
+    # 合并
+    num = len(merge_bf_results[0])  # s声源个数
+    for i in range(num):
+        a = [x[i] for x in merge_bf_results]
+        enhanced = np.array(a)
+        enhanced = enhanced.flatten()
+        sf.write(processedAudioDir + "\\" + str(i+1) + ".wav",
+                 enhanced / np.max(np.abs(enhanced)) * 0.65,
+                 48000)
+
 
 def main():
     global processedAudioDir
-
     parser = argparse.ArgumentParser()
     parser.add_argument("meetingIndex")
     args = parser.parse_args()
@@ -61,24 +64,41 @@ def main():
 
     cnt = 1
     originalAudioDir = "D:\\_code\\project_java_meetingServer\\ideaProj\\receivedRecords\\" + str(idx)
-    processedAudioDir = "D:\\_code\\project_java_meetingServer\\ideaProj\\processedRecords\\" + str(idx);
+    processedAudioDir = "D:\\_code\\project_java_meetingServer\\ideaProj\\processedRecords\\" + str(idx)
+    #processedAudioDir = "D:\\_code\\project_java_meetingServer\\ideaProj\\src\\main\\resources\\static\\audios\\" + str(idx)
+    terminatingFilePath = originalAudioDir + "\\done"
+    
     if not os.path.exists(processedAudioDir):
         os.makedirs(processedAudioDir)
-    terminatingFileName = originalAudioDir + "\\done"
-
+        
+    all_data = []
     while True:
-        if os.path.exists(terminatingFileName):
-            print("fully processed")
-            return
         curFileName = originalAudioDir + "\\" + str(cnt) + ".wav"
         if os.path.exists(curFileName):
+            # 说明有新的音频段到来，需要进行处理
             wav, rate = sf.read(curFileName, dtype="int16")
-            process_data(wav.T, rate, cnt - 1)
+            all_data.append(wav)
             cnt += 1
+            continue
+        elif os.path.exists(terminatingFilePath):
+            break
+        else:
+            time.sleep(1)
+            
+
+    # 没有分离的总音频, 合并
+    length = all_data[0].shape[0]
+    channel = all_data[0].shape[1]
+    ori = np.array(all_data)
+    ori = ori.reshape((len(all_data) * length, channel))
+    sf.write(processedAudioDir + "\\" + "0.wav", ori, 48000)
+
+    deg = corr_data(all_data)
+    process_data(all_data, deg, cnt, processedAudioDir)
+
+    resultFilePath = os.path.join(processedAudioDir, "complete")
+    resultFile = open(resultFilePath, 'x')
+    resultFile.close()
 
 if __name__ == "__main__":
     main()
-
-
-
-

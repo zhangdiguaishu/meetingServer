@@ -42,20 +42,19 @@
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
-<body id="page-top" onload="fillRecords()">
+<body id="page-top" onload="pageOnloadFunction()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
 
         <!-- Divider -->
@@ -63,20 +62,13 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
                 <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+                返回主页
+            </a>
         </li>
-
-
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
 
     </ul>
     <!-- End of Sidebar -->
@@ -86,13 +78,9 @@
         <div id="content">
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+
                 <!-- Topbar Search -->
-                <form>
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
                         <input type="text" class="form-control bg-light border-0 small" placeholder="搜索会议..."
                                aria-label="Search" aria-describedby="basic-addon2">
@@ -134,7 +122,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username"></span>
                             <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
+                                 src="../img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -237,6 +225,19 @@
 <!--onload函数，从json文件之中读取会议信息并展示-->
 <script>
     'use strict'
+
+    function pageOnloadFunction(){
+        checkLogin();
+        fillRecords();
+    }
+
+    function checkLogin(){
+        if(!localStorage.getItem("jingweiMeetingUser")){
+            alert("请返回登录");
+            window.location.href = "userLogin.html";
+        }
+    }
+
     function fillRecords(){
         let recordArray = getRecords();
         console.log(recordArray);
@@ -247,7 +248,7 @@
         let getRes;
         $.ajax({
             type: "get",
-            url: "http://localhost:8088/getRecordsByName/root",
+            url: "http://localhost:8088/getRecordsByName/" + localStorage.getItem("jingweiMeetingUser"),
             dataType: "JSON",
             async: false,
             success: function(res){
@@ -259,6 +260,7 @@
         });
         return getRes;
     }
+
     function insertRecords(recordJsonArray){
         $.each(recordJsonArray, function(index, data){
 
@@ -266,15 +268,12 @@
                 '<td><a href="meetingBrief.html?meetingIndex=' + data["index"] +'">' + data["topic"] + '</a></td>' +
                 '<td>' + data["date"] + '</td>' +
                 '<td><a href="meetingAudioGeneral.html?meetingIndex=' + data["index"] + '">' +
-                '详情</a></td>' +
+                '详情</a></td>'
                 '</tr>';
             $("#recordsTableBody").append(recordHtml);
         });
     }
 </script>
-
-
-
 </body>
 
 </html>

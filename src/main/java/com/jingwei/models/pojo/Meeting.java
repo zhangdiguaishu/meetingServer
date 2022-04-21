@@ -1,4 +1,4 @@
-package com.jingwei.pojo;
+package com.jingwei.models.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

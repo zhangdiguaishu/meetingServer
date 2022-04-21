@@ -11,16 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NettyServerRecordHandler extends ChannelInboundHandlerAdapter {
-    static Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
+    static Map<Integer, Integer> indexMap;
+
+    static{
+        indexMap = new HashMap<>();
+    }
 
     boolean initialized = false;
     int meetingIndex;
     int curIndex;
     File curFile;
     FileOutputStream curFop;
-
-    long startTime;
-    long endTime;
 
     boolean isTerminated = false;
 
@@ -32,7 +33,6 @@ public class NettyServerRecordHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception{
         ByteBuf in = (ByteBuf) msg;
-
         System.out.println(((ByteBuf) msg).readableBytes());
 
         if(!initialized){
@@ -40,12 +40,8 @@ public class NettyServerRecordHandler extends ChannelInboundHandlerAdapter {
 
             meetingIndex = in.readInt();
             if(meetingIndex == 0){
+                System.out.println("************************************meetingTerminate********************");
                 isTerminated = true;
-
-                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-                Date date = new Date(System.currentTimeMillis());
-                System.out.println(formatter.format(date));
-
                 meetingIndex = in.readInt();
                 String terminateFilePath =  "receivedRecords" + "/" + meetingIndex + "/" + "done";
                 System.out.println(terminateFilePath);
@@ -76,6 +72,7 @@ public class NettyServerRecordHandler extends ChannelInboundHandlerAdapter {
 
         byte[] t = new byte[in.readableBytes()];
         in.readBytes(t);
+        in.release();
         curFop.write(t);
         curFop.flush();
     }
@@ -89,9 +86,6 @@ public class NettyServerRecordHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("channelInactive");
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println(formatter.format(date));
     }
 
 }

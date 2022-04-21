@@ -36,7 +36,7 @@
 
 </head>
 
-<body id="page-top" onload="startRecording()">
+<body id="page-top" onload="pageOnloadFunction()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -49,7 +49,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3" id="welcome-name"></div>
+            <div class="sidebar-brand-text mx-3" id="welcome-name">欢迎</div>
         </a>
 
         <!-- Divider -->
@@ -57,20 +57,14 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="meetingRecords.html">
+            <a class="nav-link" href="meetingRecords.html" style="text-align: center">
                 <i class="fas fa-fw fa-tachometer-alt" style="font-size:1.2rem" ></i>
-                <span style="font-family: SimHei; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span></a>
+                返回主页
+            </a>
         </li>
-
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
 
     </ul>
     <!-- End of Sidebar -->
@@ -83,11 +77,6 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -185,7 +174,7 @@
                                         </div>
                                         <div style="background-color:red; margin-left:50px; width:15px; height:15px; border-radius: 50%;"></div>
                                     </div>
-                                    <h6 id="timing"> 00:00</h6>
+                                    <h6 id="meetingTimer"> 00:00</h6>
                                 </div>
                                 <div class="card-body" style="height: 400px">
                                     <div class="chart-area" style="height: 80%">
@@ -274,20 +263,38 @@
 </body>
 
 <script>
+    function pageOnloadFunction(){
+        window.jingweiMeetingTimer = 0;
+        startTiming();
+        startRecording();
+    }
+
+    function startTiming(){
+        setInterval(() => {
+            window.jingweiMeetingTimer += 1;
+            let minute = Math.floor(window.jingweiMeetingTimer / 60);
+            if(minute < 10) minute = "0" + minute;
+            let second = window.jingweiMeetingTimer % 60;
+            if(second < 10) second = "0" + second;
+            document.getElementById("meetingTimer").innerHTML = minute + ":" + second;
+        }, 1000);
+    }
+
     function startRecording(){
         if(window.recording) return;
         window.recording = true;
-        window.location.href = "jingweiMeeting:\\\\" + sessionStorage.getItem("jingweiMeetingIndex");
+        window.location.href = "jingweiMeeting:\\\\" + localStorage.getItem("jingweiMeetingIndex");
 
         $.ajax({
             type: "get",
-            url: "http://localhost:8088/startProcess/" + sessionStorage.getItem("jingweiMeetingIndex"),
+            url: "http://localhost:8088/startProcess/" + localStorage.getItem("jingweiMeetingIndex"),
         });
     }
 
     function terminateRecording(){
+        window.recording = false;
         window.location.href = "jingweiMeetingTerminator:\\";
-        window.location.href = "meetingAudioGeneral.html?meetingIndex=" + sessionStorage.getItem("jingweiMeetingIndex");
+        window.location.href = "meetingAudioGeneral.html?meetingIndex=" + localStorage.getItem("jingweiMeetingIndex");
     }
 </script>
 <script>

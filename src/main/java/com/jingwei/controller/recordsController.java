@@ -4,17 +4,20 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jingwei.dao.MeetingMapper;
-import com.jingwei.pojo.Meeting;
-import com.jingwei.utility.AudioProcessor;
+import com.jingwei.dao.SeparatedAudioMapper;
+import com.jingwei.models.pojo.Meeting;
+import com.jingwei.utilities.CommandRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class recordsCtl {
+public class recordsController {
     @Autowired
     private MeetingMapper meetingMapper;
+    @Autowired
+    private SeparatedAudioMapper separatedAudioMapper;
 
     @PostMapping("newMeeting")
     public String newMeeting(@RequestBody String meetingInfo){
@@ -40,10 +43,17 @@ public class recordsCtl {
 
         return retJsonObject.toJSONString();
     }
+
     @GetMapping("startProcess/{meetingIndex}")
     public void startProcess(@PathVariable("meetingIndex") String meetingIndex){
-        AudioProcessor audioProcessor = new AudioProcessor(meetingIndex);
-        audioProcessor.run();
+        //为新的会议创建子音频声源名
+        int t = Integer.parseInt(meetingIndex);
+        separatedAudioMapper.intializeNewMeeting(t);
+
+        String cmd = "D:\\_environment\\PYTHON\\python.exe D:\\_code\\project_java_meetingServer\\ideaProj\\utilityBeamforming\\father" +
+                ".py " + meetingIndex;
+        CommandRunner audioProcessor = new CommandRunner(cmd);
+        audioProcessor.start();
     }
 
     @GetMapping("getRecordsByName/{userName}")
@@ -58,6 +68,7 @@ public class recordsCtl {
 
         return jsonArray.toJSONString();
     }
+
     @GetMapping("getRecordByIndex/{index}")
     public String getMeetingRecordByIndex(@PathVariable("index") int index){
         Meeting meeting = meetingMapper.queryMeetingRecordByIndex(index);
